@@ -43,8 +43,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/","/member/signup",
                     "/member/signin",
                     "/member/email-auth",
-                    "member/find/password")
+                    "/member/find/password")
             .permitAll();
+
+        // 관리자 역할인 경우
+        http.authorizeRequests()
+                .antMatchers("/admin/**")
+                .hasAuthority("ROLE_ADMIN");
+
+        // 에러인 경우 이동할 페이지(임의로 결정)
+        http.exceptionHandling()
+                .accessDeniedPage("/error/denied");
     }
 
     @Bean
