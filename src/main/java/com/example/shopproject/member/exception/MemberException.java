@@ -1,6 +1,6 @@
-package com.example.shopproject.exception;
+package com.example.shopproject.member.exception;
 
-import com.example.shopproject.main.type.ErrorCode;
+import com.example.shopproject.common.type.ErrorCode;
 
 public class MemberException extends RuntimeException{
 

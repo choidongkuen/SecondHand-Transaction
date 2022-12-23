@@ -1,8 +1,7 @@
-package com.example.shopproject.main.Mail;
+package com.example.shopproject.common.mail;
 
 
-import com.example.shopproject.exception.MailException;
-import com.example.shopproject.main.type.ErrorCode;
+import com.example.shopproject.common.type.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -48,11 +47,13 @@ public class MailComponents {
                 MimeMessageHelper mimeMessageHelper =
                         new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-                mimeMessageHelper.setTo(mail.getMail());
+                mimeMessageHelper.setTo(mail.getEmail());
                 mimeMessageHelper.setSubject(mail.getSubject());
                 mimeMessageHelper.setText(mail.getText(),true);
             }
         };
+
+
 
         try{
             javaMailSender.send(msg);
