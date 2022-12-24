@@ -16,10 +16,18 @@ public class MainController {
 
     private final MailComponents mailComponents;
 
+    // 메인 페이지(임의)
     @GetMapping("/")
     public String main() {
 
         return "index";
+    }
+
+    // 에러 페이지(임의 - 접근 관련)
+    @GetMapping("/error/denied")
+    public String error(){
+
+        return "error/denied";
     }
 
 

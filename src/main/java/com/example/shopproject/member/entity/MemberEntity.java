@@ -2,8 +2,11 @@ package com.example.shopproject.member.entity;
 
 
 import com.example.shopproject.common.type.Role;
+import com.example.shopproject.common.type.UserStatus;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -33,6 +36,8 @@ public class MemberEntity extends BasicEntity implements UserDetails{
 
     private String name;
 
+    private String phone;
+
     private String password;
 
     private String address;
@@ -40,10 +45,13 @@ public class MemberEntity extends BasicEntity implements UserDetails{
     @Column(unique = true)
     private String nickName;
 
-    private String phone;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
+    private Role role;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    @Column(nullable = true)
+    private UserStatus userStatus;
 
     // 이메일 인증 여부
     private boolean emailAuthYn;
@@ -60,6 +68,11 @@ public class MemberEntity extends BasicEntity implements UserDetails{
     // 비밀번호 초기화 키 유효 기간
     private LocalDateTime resetPasswordLimitDate;
 
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
 
     @Override

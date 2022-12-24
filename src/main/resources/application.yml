@@ -6,12 +6,12 @@ spring:
     username: choidongkuen
     password: ehdrms6390
 
-
   jpa:
     generate-ddl: true
     hibernate:
       ddl-auto: update
     show-sql: true
+    open-in-view: true
 
   mail:
     host: smtp.gmail.com
@@ -23,3 +23,10 @@ spring:
         smtp:
           starttls:
             enable: true
+
+
+mybatis:
+  mapper-locations: mybatis/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -1,6 +1,7 @@
 package com.example.shopproject.member.exception;
 
 
+import com.example.shopproject.common.response.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +16,8 @@ public class MemberExceptionHandler {
     @ExceptionHandler(MemberException.class)
     protected ResponseEntity<?> handleMemberException(MemberException e){
 
-        log.error(e.getMessage());
+        log.info(e.getMessage());
 
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ResponseResult(false, e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }
