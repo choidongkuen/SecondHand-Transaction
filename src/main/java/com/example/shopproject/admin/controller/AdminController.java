@@ -18,6 +18,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 
 
+/**
+ * 1. 회원관리 기능
+ * 2. 상품 관련 기능
+ */
+
 @RestController
 @Slf4j
 @RequiredArgsConstructor
