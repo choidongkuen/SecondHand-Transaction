@@ -41,8 +41,6 @@ public class MemberDto {
                 .nickName(entity.getNickName())
                 .emailAuthAt(entity.getEmailAuthAt())
                 .emailAuthYn(entity.isEmailAuthYn())
-                .createdAt(entity.getCreatedAt())
-                .updatedAt(entity.getUpdatedAt())
                 .build();
     }
 }

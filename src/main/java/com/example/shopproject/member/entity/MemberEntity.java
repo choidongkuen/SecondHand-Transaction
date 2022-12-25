@@ -3,16 +3,18 @@ package com.example.shopproject.member.entity;
 
 import com.example.shopproject.common.type.Role;
 import com.example.shopproject.common.type.UserStatus;
+import com.example.shopproject.member.dto.Address;
+import com.example.shopproject.product.entity.ProductEntity;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 @Slf4j
@@ -24,7 +26,7 @@ import java.util.Collection;
 @Table(name = "member")
 @Entity
 
-public class MemberEntity extends BasicEntity implements UserDetails{
+public class MemberEntity extends BasicTimeEntity implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +42,11 @@ public class MemberEntity extends BasicEntity implements UserDetails{
 
     private String password;
 
-    private String address;
+    @Embedded
+    private Address address;
+
+    @OneToMany(mappedBy = "memberEntity")
+    private List<ProductEntity> products = new ArrayList<>();
 
     @Column(unique = true)
     private String nickName;
@@ -67,13 +73,6 @@ public class MemberEntity extends BasicEntity implements UserDetails{
 
     // 비밀번호 초기화 키 유효 기간
     private LocalDateTime resetPasswordLimitDate;
-
-    @CreatedDate
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

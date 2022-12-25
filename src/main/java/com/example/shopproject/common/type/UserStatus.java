@@ -6,15 +6,17 @@ package com.example.shopproject.common.type;
  * STOP : 이용 불가
  * REQ : 이메일 인증 필요 (이메일 인증 전)
  */
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+@RequiredArgsConstructor
+@Getter
 public enum UserStatus {
 
     USING("사용중인 회원입니다."),
     STOP("정지상태의 회원입니다."),
     REQ("이메일 인증이 필요한 회원입니다.");
 
-    private String statusMsg;
+    private final String statusMsg;
 
-    private UserStatus(String message) {
-        this.statusMsg = message;
-    }
 }

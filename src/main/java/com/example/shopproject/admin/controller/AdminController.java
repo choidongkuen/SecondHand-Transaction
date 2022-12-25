@@ -19,8 +19,7 @@ import javax.validation.constraints.Email;
 
 
 /**
- * 1. 회원관리 기능
- * 2. 상품 관련 기능
+ * 1. 회원 관련 관리자 기능
  */
 
 @RestController
@@ -36,8 +35,8 @@ public class AdminController {
     // 관리자 회원 정보 검색 API
     @GetMapping("/member/list")
     public ResponseEntity<?> getMemberList(
-            @PageableDefault(size = 10, sort = "createdAt"
-                    , direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(size = 10, sort = "createdAt",
+                    direction = Sort.Direction.DESC) Pageable pageable
     ) {
 
         return new ResponseEntity<>(
@@ -88,4 +87,29 @@ public class AdminController {
                 memberService.setUserPassword(request), HttpStatus.OK
         );
     }
+
+
+    /**
+     * 상품 관련 관리자 기능
+     */
+
+
+    // 상품
+    @GetMapping("/product/list")
+    public ResponseEntity<?> getProductList(
+            @PageableDefault(size = 10, sort = "createdAt",
+                    direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+
+        return null;
+    }
+
+
+    @PostMapping("/product/add")
+    public ResponseEntity<?> addProduct(
+
+    ) {
+        return null;
+    }
+
 }

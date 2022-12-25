@@ -1,8 +1,8 @@
-### 회원 리스트 테스트
+### 회원 리스트 테스트(성공)
 GET http://localhost:8080/admin/member/list
 
 
-### 회원 역할 변경 테스트
+### 회원 역할 변경 테스트(성공)
 POST http://localhost:8080/admin/member/role
 Content-Type: application/json
 
@@ -11,7 +11,7 @@ Content-Type: application/json
   "role" : "USER"
 }
 
-### 회원 상태 변경 테스트
+### 회원 상태 변경 테스트(성공)
 POST http://localhost:8080/admin/member/status
 Content-Type: application/json
 
@@ -21,10 +21,10 @@ Content-Type: application/json
 }
 
 
-### 회원 상세정보 테스트
+### 회원 상세정보 테스트(성공)
 GET http://localhost:8080/admin/member/detail?email=danaver12daum.net
 
-### 회원 비밀번호 변경
+### 회원 비밀번호 변경(성공)
 POST http://localhost:8080/admin/member/password
 Content-Type: application/json
 

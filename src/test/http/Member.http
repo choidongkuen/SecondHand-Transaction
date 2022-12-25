@@ -1,0 +1,51 @@
+### 회원가입 테스트(성공)
+
+POST http://localhost:8080/member/signup
+Content-Type: application/json
+
+{
+  "email" : "danaver12@daum.net",
+  "name": "최동근",
+  "phone" : "01090176902",
+  "password" : "ehdrms121212",
+  "checkPassword": "ehdrms121212",
+  "nickName" : "안녕"
+}
+
+### 로그인 테스트(성공)
+
+###
+POST http://localhost:8080/member/signin
+Content-Type: application/json
+
+{
+  "email":"danaver12@daum.net",
+  "password": "ehdrms1212"
+}
+
+
+### 이메일 인증 테스트(성공)
+GET http://localhost:8080/admin/member/detail?email=danaver12daum.net
+
+
+
+
+### 비밀번호 찾기 테스트(성공)
+POST http://localhost:8080/member/find/password
+Content-Type: application/json
+
+{
+  "email": "danaver12@daum.net",
+  "name": "최동근"
+}
+
+
+### 비밀번호 초기화 테스트(성공)
+GET http://localhost:8080/member/reset/password
+Content-Type: application/json
+
+{
+  "uuid": "9611a4ff-0a77-44e6-a0e3-a692fa8865ea",
+  "password":"ehdrms1212",
+  "checkPassword":"ehdrms1212"
+}
