@@ -5,6 +5,7 @@ import com.example.shopproject.admin.dto.MemberPassword;
 import com.example.shopproject.admin.dto.MemberSetRole;
 import com.example.shopproject.admin.dto.MemberStatus;
 import com.example.shopproject.member.service.MemberService;
+import com.example.shopproject.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
+
+import static com.example.shopproject.product.dto.ProductAdminAdd.Request;
 
 
 /**
@@ -30,9 +33,10 @@ public class AdminController {
 
 
     private final MemberService memberService;
+    private final ProductService productService;
 
 
-    // 관리자 회원 정보 검색 API
+    // 관리자 회원 리스트 검색 API
     @GetMapping("/member/list")
     public ResponseEntity<?> getMemberList(
             @PageableDefault(size = 10, sort = "createdAt",
@@ -94,22 +98,26 @@ public class AdminController {
      */
 
 
-    // 상품
+    // 관리자 상품 리스트 검색 API
     @GetMapping("/product/list")
     public ResponseEntity<?> getProductList(
             @PageableDefault(size = 10, sort = "createdAt",
-                    direction = Sort.Direction.DESC) Pageable pageable
-    ) {
+                    direction = Sort.Direction.DESC) Pageable pageable) {
 
-        return null;
+        return new ResponseEntity<>(
+                productService.getProductList(), HttpStatus.OK
+        );
+
+
     }
 
-
+    // 관리자 상품 등록 API
     @PostMapping("/product/add")
-    public ResponseEntity<?> addProduct(
+    public ResponseEntity<?> addProduct(@RequestBody @Valid Request request) {
 
-    ) {
-        return null;
+        return new ResponseEntity<>(
+                productService.adminAddProduct(request), HttpStatus.OK
+        );
     }
 
 }

@@ -73,15 +73,12 @@ public class ProductEntity extends BasicTimeEntity {
     @Column(nullable = false)
     private Long price;
 
-    // 세일 판매 여부자
-    private boolean onSale;
-
-    // 세일 종료 일자
-    private LocalDate saleEndDt;
-
     // 세일 가격(판매가)
+    @Column(nullable = false)
     private Long salePrice;
 
+    // (등록)상품 개수
     private Long stock;
+
 
 }

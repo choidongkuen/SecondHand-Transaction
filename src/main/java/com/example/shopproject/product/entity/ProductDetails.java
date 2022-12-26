@@ -23,7 +23,6 @@ import javax.persistence.*;
 @Table
 @Entity
 
-
 public class ProductDetails extends BasicTimeEntity {
 
     @Id
