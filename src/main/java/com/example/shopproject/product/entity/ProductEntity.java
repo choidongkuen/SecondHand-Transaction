@@ -51,6 +51,9 @@ public class ProductEntity extends BasicTimeEntity {
     private Long id;
 
 
+    private String productId;
+
+
     @Column(nullable = false,unique = true)
     private String productName;
 

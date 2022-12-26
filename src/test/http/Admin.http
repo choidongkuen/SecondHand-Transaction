@@ -36,22 +36,30 @@ Content-Type: application/json
   "password": "ehdrmsehdrms"
 }
 
-#################################################################
-#### 상품 부분
+
 
 ### 관리자 상품 검색(성공)
-
 GET http://localhost:8080/admin/product/list
+
 ### 관리자 상품 등록(성공)
 POST http://localhost:8080/admin/product/add
 Content-Type: application/json
 
 {
-  "productName" : "아이폰14",
+  "productName" : "아이폰12",
   "price" : 1200000,
   "salePrice" : 1000000,
   "productStatus": "USED",
   "stock" : 1
+}
+
+### 관리자 상품 삭제(성공)
+POST http://localhost:8080/admin/product/remove
+Content-Type: application/json
+
+{
+  "id" : 2,
+  "productName" : "아이폰12"
 }
 
 

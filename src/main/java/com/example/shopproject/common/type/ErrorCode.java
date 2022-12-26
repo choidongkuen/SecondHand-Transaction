@@ -22,11 +22,17 @@ public enum ErrorCode {
     RESETPASSWORDKEY_UNMATCH("패스워드 키가 존재하지 않습니다."),
     INVALID_DATE("유효하지 않은 날짜입니다."),
 
-    RESET_PASSWORD_ERROR("비밀번호를 초기화 하던 중에 오류가 발생했습니다."),
+    RESET_PASSWORD_ERROR("비밀번호를 초 기화 하던 중에 오류가 발생했습니다."),
 
-    MEMBER_STATUS_IS_STOP("해당 회원은 이용이 정지되었습니다.");
+    MEMBER_STATUS_IS_STOP("해당 회원은 이용이 정지되었습니다."),
 
 
+    ////////////////////////////////////////////////////////////////////
+
+
+    PRODUCT_NOT_FOUND("해당 상품 정보가 존재하지 않습니다."),
+
+    PRODUCT_ALREADY_SOLDOUT("해당 상품은 이미 판매 완료되었습니다.");
 
     private final String message;
 

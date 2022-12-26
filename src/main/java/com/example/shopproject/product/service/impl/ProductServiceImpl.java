@@ -1,8 +1,10 @@
 package com.example.shopproject.product.service.impl;
 
-import com.example.shopproject.product.dto.ProductAdminAdd;
+import com.example.shopproject.common.type.ErrorCode;
+import com.example.shopproject.product.dto.ProductAdminRemove;
 import com.example.shopproject.product.dto.ProductDto;
 import com.example.shopproject.product.entity.ProductEntity;
+import com.example.shopproject.product.exception.ProductException;
 import com.example.shopproject.product.repository.ProductRepository;
 import com.example.shopproject.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +16,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.example.shopproject.common.type.ProductSaleStatus.ON_SALE;
-import static com.example.shopproject.product.dto.ProductAdminAdd.*;
+import static com.example.shopproject.product.dto.ProductAdminAdd.Request;
+import static com.example.shopproject.product.dto.ProductAdminAdd.Response;
 
 
 /**
@@ -44,27 +47,40 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDto> getProductList() {
 
         return productRepository.findAll().stream()
-                .map(ProductDto::fromEntity)
-                .collect(Collectors.toList());
+                                .map(ProductDto::fromEntity)
+                                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public Response adminAddProduct(Request request){
+    public Response adminAddProduct(Request request) {
 
         ProductEntity productEntity = ProductEntity.builder()
-                .productName(request.getProductName())
-                .price(request.getPrice())
-                .salePrice(request.getSalePrice())
-                .stock(request.getStock())
-                .productStatus(request.getProductStatus())
-                .productSaleStatus(ON_SALE)
-                .build();
+                                                   .productName(request.getProductName())
+                                                   .price(request.getPrice())
+                                                   .salePrice(request.getSalePrice())
+                                                   .stock(request.getStock())
+                                                   .productStatus(request.getProductStatus())
+                                                   .productSaleStatus(ON_SALE)
+                                                   .build();
 
         productRepository.save(productEntity);
 
         return Response.fromEntity(
                 productRepository.save(productEntity)
         );
+    }
+
+    @Override
+    public ProductAdminRemove.Response adminRemoveProduct(ProductAdminRemove.Request request) {
+
+        ProductEntity productEntity = productRepository.findById(request.getId())
+                           .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        productRepository.delete(productEntity);
+
+        return ProductAdminRemove.Response.fromEntity(productEntity);
+
+
     }
 }

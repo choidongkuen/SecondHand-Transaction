@@ -5,6 +5,7 @@ import com.example.shopproject.admin.dto.MemberPassword;
 import com.example.shopproject.admin.dto.MemberSetRole;
 import com.example.shopproject.admin.dto.MemberStatus;
 import com.example.shopproject.member.service.MemberService;
+import com.example.shopproject.product.dto.ProductAdminRemove;
 import com.example.shopproject.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -120,4 +121,14 @@ public class AdminController {
         );
     }
 
+    // 관리자 상품 삭제 API
+    @PostMapping("/product/remove")
+    public ResponseEntity<?> removeProduct(
+            @RequestBody @Valid ProductAdminRemove.Request request
+    ) {
+
+        return new ResponseEntity<>(
+                productService.adminRemoveProduct(request), HttpStatus.OK
+        );
+    }
 }

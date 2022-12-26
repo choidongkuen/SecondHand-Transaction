@@ -51,12 +51,14 @@ public class ProductAdminAdd {
 
         private String productName;
         private ProductSaleStatus productSaleStatus;
+        private String message;
 
         public static Response fromEntity(ProductEntity entity) {
 
             return Response.builder()
                     .productName(entity.getProductName())
                     .productSaleStatus(entity.getProductSaleStatus())
+                    .message("상품이 정상적으로 등록되었습니다.")
                     .build();
         }
     }

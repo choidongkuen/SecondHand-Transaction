@@ -2,6 +2,7 @@ package com.example.shopproject.product.service;
 
 
 import com.example.shopproject.product.dto.ProductAdminAdd.Response;
+import com.example.shopproject.product.dto.ProductAdminRemove;
 import com.example.shopproject.product.dto.ProductDto;
 
 import java.util.List;
@@ -32,4 +33,5 @@ public interface ProductService {
     Response adminAddProduct(Request request);
 
 
+    ProductAdminRemove.Response adminRemoveProduct(ProductAdminRemove.Request request);
 }
