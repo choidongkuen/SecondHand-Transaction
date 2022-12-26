@@ -93,5 +93,17 @@ Content-Type: application/json
   "productName" : "아이폰12"
 }
 
+### 관리자 상품 수정(성공)
+PUT http://localhost:8080/admin/product/update/1
+Content-Type: application/json
+
+{
+"productName" : "아이폰12",
+"productSaleStatus" : "ON_SALE",
+"productStatus" : "NEW",
+"price" : 10000,
+"salePrice" : 8000,
+"stock" : 2
+}
 
 

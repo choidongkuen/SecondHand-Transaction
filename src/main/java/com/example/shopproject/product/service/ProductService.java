@@ -33,4 +33,6 @@ public interface ProductService {
 
 
     ProductAdminRemove.Response adminRemoveProduct(ProductAdminRemove.Request request);
+
+    ProductDto adminUpdateProduct(ProductDto productDto, Long id);
 }

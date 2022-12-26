@@ -8,9 +8,11 @@ import com.example.shopproject.category.service.CategoryService;
 import com.example.shopproject.common.type.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.example.shopproject.category.dto.CategoryUpdate.Request;
@@ -80,8 +82,16 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryDto> getCategoryList() {
 
-        return categoryRepository.findAll().stream()
-                                 .map(CategoryDto::fromEntity)
-                                 .collect(Collectors.toList());
+        List<CategoryEntity> list
+                = categoryRepository.findAll(getSortBySortValueDesc());
+
+        return list.stream()
+                .map(CategoryDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    public Sort getSortBySortValueDesc(){
+
+        return Sort.by(Sort.Direction.DESC, "sortValue");
     }
 }

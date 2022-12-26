@@ -5,10 +5,7 @@ import com.example.shopproject.common.type.ProductSaleStatus;
 import com.example.shopproject.common.type.ProductStatus;
 import com.example.shopproject.member.entity.BasicTimeEntity;
 import com.example.shopproject.member.entity.MemberEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
@@ -37,6 +34,7 @@ import java.time.LocalDate;
  */
 @Slf4j
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -54,7 +52,7 @@ public class ProductEntity extends BasicTimeEntity {
     private String productId;
 
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String productName;
 
     @ManyToOne

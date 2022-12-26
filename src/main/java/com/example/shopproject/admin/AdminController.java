@@ -9,6 +9,7 @@ import com.example.shopproject.member.dto.MemberSetRole;
 import com.example.shopproject.member.dto.MemberStatus;
 import com.example.shopproject.member.service.MemberService;
 import com.example.shopproject.product.dto.ProductAdminRemove;
+import com.example.shopproject.product.dto.ProductDto;
 import com.example.shopproject.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,6 @@ public class AdminController {
 
     private final MemberService memberService;
     private final ProductService productService;
-
     private final CategoryService categoryService;
 
 
@@ -180,4 +180,17 @@ public class AdminController {
                 productService.adminRemoveProduct(request), HttpStatus.OK
         );
     }
+
+    // 관리자 상품 수정 API
+    @PutMapping("/product/update/{id}")
+    public ResponseEntity<?> updateProduct(
+            @RequestBody @Valid ProductDto productDto, @PathVariable Long id
+    ){
+
+        return new ResponseEntity<>(
+                productService.adminUpdateProduct(productDto,id), HttpStatus.OK
+
+        );
+    }
+
 }

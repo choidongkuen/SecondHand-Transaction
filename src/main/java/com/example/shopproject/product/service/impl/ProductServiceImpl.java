@@ -83,4 +83,21 @@ public class ProductServiceImpl implements ProductService {
 
 
     }
+
+    @Override
+    public ProductDto adminUpdateProduct(ProductDto productDto, Long id) {
+
+        ProductEntity productEntity = productRepository.findById(id)
+                      .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        productEntity.setProductName(productDto.getProductName());
+        productEntity.setProductSaleStatus(productDto.getProductSaleStatus());
+        productEntity.setProductStatus(productDto.getProductStatus());
+        productEntity.setPrice(productDto.getPrice());
+        productEntity.setSalePrice(productDto.getSalePrice());
+        productEntity.setStock(productDto.getStock());
+
+        return ProductDto.fromEntity(productRepository.save(productEntity));
+
+    }
 }
