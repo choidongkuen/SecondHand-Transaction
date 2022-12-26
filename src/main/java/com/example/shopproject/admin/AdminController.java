@@ -1,4 +1,4 @@
-package com.example.shopproject.admin.controller;
+package com.example.shopproject.admin;
 
 
 
