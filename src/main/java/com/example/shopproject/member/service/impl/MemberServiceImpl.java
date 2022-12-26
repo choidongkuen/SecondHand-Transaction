@@ -1,20 +1,17 @@
 package com.example.shopproject.member.service.impl;
 
 
-import com.example.shopproject.admin.dto.MemberPassword;
-import com.example.shopproject.admin.dto.MemberSetRole;
-import com.example.shopproject.admin.dto.MemberStatus;
+
 import com.example.shopproject.common.mail.Mail;
 import com.example.shopproject.common.mail.MailComponents;
 import com.example.shopproject.common.type.ErrorCode;
 import com.example.shopproject.common.type.Role;
 import com.example.shopproject.common.type.UserStatus;
+import com.example.shopproject.member.dto.*;
 import com.example.shopproject.member.dto.MemberAuth.SignIn;
 import com.example.shopproject.member.dto.MemberAuth.SignUp;
-import com.example.shopproject.member.dto.MemberDto;
 import com.example.shopproject.member.dto.MemberFindPassword.Request;
 import com.example.shopproject.member.dto.MemberFindPassword.Response;
-import com.example.shopproject.member.dto.MemberResetPassword;
 import com.example.shopproject.member.entity.MemberEntity;
 import com.example.shopproject.member.exception.MemberException;
 import com.example.shopproject.member.repostory.MemberRepository;
@@ -36,7 +33,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.example.shopproject.admin.dto.MemberStatus.Response.fromEntity;
 import static com.example.shopproject.common.type.UserStatus.*;
 
 @Slf4j
@@ -297,7 +293,8 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
 
         UserStatus preUserStatus = memberEntity.getUserStatus();
         memberEntity.setUserStatus(request.getUserStatus());
-        return fromEntity(memberRepository.save(memberEntity), preUserStatus);
+
+        return MemberStatus.Response.fromEntity(memberRepository.save(memberEntity), preUserStatus);
     }
 
     @Override

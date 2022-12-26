@@ -1,13 +1,9 @@
 package com.example.shopproject.member.service;
 
-import com.example.shopproject.admin.dto.MemberPassword;
-import com.example.shopproject.admin.dto.MemberSetRole;
-import com.example.shopproject.admin.dto.MemberStatus;
-import com.example.shopproject.member.dto.MemberAuth;
-import com.example.shopproject.member.dto.MemberDto;
+
+import com.example.shopproject.member.dto.*;
 import com.example.shopproject.member.dto.MemberFindPassword.Request;
 import com.example.shopproject.member.dto.MemberFindPassword.Response;
-import com.example.shopproject.member.dto.MemberResetPassword;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;

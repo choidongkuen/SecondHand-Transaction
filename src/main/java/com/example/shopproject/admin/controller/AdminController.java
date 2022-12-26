@@ -1,9 +1,12 @@
 package com.example.shopproject.admin.controller;
 
 
-import com.example.shopproject.admin.dto.MemberPassword;
-import com.example.shopproject.admin.dto.MemberSetRole;
-import com.example.shopproject.admin.dto.MemberStatus;
+
+import com.example.shopproject.category.dto.CategoryUpdate;
+import com.example.shopproject.category.service.CategoryService;
+import com.example.shopproject.member.dto.MemberPassword;
+import com.example.shopproject.member.dto.MemberSetRole;
+import com.example.shopproject.member.dto.MemberStatus;
 import com.example.shopproject.member.service.MemberService;
 import com.example.shopproject.product.dto.ProductAdminRemove;
 import com.example.shopproject.product.service.ProductService;
@@ -22,10 +25,6 @@ import javax.validation.constraints.Email;
 import static com.example.shopproject.product.dto.ProductAdminAdd.Request;
 
 
-/**
- * 1. 회원 관련 관리자 기능
- */
-
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -36,6 +35,12 @@ public class AdminController {
     private final MemberService memberService;
     private final ProductService productService;
 
+    private final CategoryService categoryService;
+
+
+    /**
+     * 1. 회원 관련 관리자 기능
+     */
 
     // 관리자 회원 리스트 검색 API
     @GetMapping("/member/list")
@@ -95,7 +100,51 @@ public class AdminController {
 
 
     /**
-     * 상품 관련 관리자 기능
+     * 2. 카테고리 관련 관리자 기능
+     */
+
+    // 관리자 카테고리 리스트 검색 API
+    @GetMapping("/category/list")
+    public ResponseEntity<?> getCategoryList() {
+
+        return new ResponseEntity<>(
+                categoryService.getCategoryList(), HttpStatus.OK
+        );
+    }
+
+    // 관리자 카테고리 추가 API
+    @PostMapping("/category/add")
+    public ResponseEntity<?> addCategory(@RequestParam String categoryName) {
+
+        return new ResponseEntity<>(
+                categoryService.addCategory(categoryName), HttpStatus.OK
+        );
+
+    }
+
+    // 관리자 카테고리 삭제 API
+    @DeleteMapping("/category/remove/{id}")
+    public ResponseEntity<?> removeCategory(@PathVariable Long id) {
+
+        return new ResponseEntity<>(
+                categoryService.removeCategory(id), HttpStatus.OK
+        );
+
+    }
+
+    // 관리자 카테고리 수정 API
+    @PutMapping("/category/update")
+    public ResponseEntity<?> updateCategory(
+            @RequestBody @Valid CategoryUpdate.Request request) {
+
+        return new ResponseEntity<>(
+                categoryService.updateCategory(request), HttpStatus.OK
+        );
+    }
+
+
+    /**
+     * 3. 상품 관련 관리자 기능
      */
 
 
@@ -122,7 +171,7 @@ public class AdminController {
     }
 
     // 관리자 상품 삭제 API
-    @PostMapping("/product/remove")
+    @DeleteMapping("/product/remove")
     public ResponseEntity<?> removeProduct(
             @RequestBody @Valid ProductAdminRemove.Request request
     ) {

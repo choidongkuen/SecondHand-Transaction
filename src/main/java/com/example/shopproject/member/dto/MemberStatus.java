@@ -1,4 +1,4 @@
-package com.example.shopproject.admin.dto;
+package com.example.shopproject.member.dto;
 
 import com.example.shopproject.common.type.UserStatus;
 import com.example.shopproject.member.entity.MemberEntity;

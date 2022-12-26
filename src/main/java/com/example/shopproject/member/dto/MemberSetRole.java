@@ -1,8 +1,10 @@
-package com.example.shopproject.admin.dto;
+package com.example.shopproject.member.dto;
 
 import com.example.shopproject.common.type.Role;
 import com.example.shopproject.member.entity.MemberEntity;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
@@ -37,11 +39,11 @@ public class MemberSetRole {
 
         public static Response fromEntity(MemberEntity entity, Role preRole){
             return Response.builder()
-                    .email(entity.getEmail())
-                    .name(entity.getName())
-                    .preRole(preRole)
-                    .postRole(entity.getRole())
-                    .build();
+                           .email(entity.getEmail())
+                           .name(entity.getName())
+                           .preRole(preRole)
+                           .postRole(entity.getRole())
+                           .build();
         }
     }
 }

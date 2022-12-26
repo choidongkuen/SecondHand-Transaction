@@ -1,4 +1,4 @@
-package com.example.shopproject.member.exception;
+package com.example.shopproject.product.exception;
 
 
 import com.example.shopproject.common.response.ResponseResult;
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 @Slf4j
-public class MemberExceptionHandler {
+public class ProductExceptionHandler {
 
-    @ExceptionHandler(MemberException.class)
-    protected ResponseEntity<?> handleMemberException(MemberException e){
+    @ExceptionHandler(ProductException.class)
+    protected ResponseEntity<?> handleMemberException(ProductException e) {
 
         log.info(e.getMessage());
 
