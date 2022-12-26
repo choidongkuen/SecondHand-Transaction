@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.example.shopproject.common.type.ProductSaleStatus.ON_SALE;
@@ -113,8 +114,13 @@ public class ProductServiceImpl implements ProductService {
         ProductEntity productEntity = productRepository.findById(id)
                                                        .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));
 
-        productRepository.delete(productEntity);
+        ProductDetailsEntity detailsEntity = productEntity.getProductDetailsEntity();
 
+        if(detailsEntity != null){
+            productDetailsRepostitory.delete(detailsEntity);
+        }
+
+        productRepository.delete(productEntity);
         return fromEntity(productEntity);
     }
 
@@ -152,15 +158,11 @@ public class ProductServiceImpl implements ProductService {
 
         ProductDetailsEntity productDetailsEntity = ProductDetailsEntity.builder()
                                             .summary(request.getSummary())
-                                            .productEntity(productEntity)
                                             .productDescription(request.getProductDescription())
                                             .maker(request.getMaker())
                                             .build();
 
-
-        productDetailsRepostitory.save(productDetailsEntity);
-
-        productEntity.setProductDetailsEntity( productDetailsRepostitory.save(productDetailsEntity));
+        productEntity.setProductDetailsEntity(productDetailsRepostitory.save(productDetailsEntity));
         productRepository.save(productEntity);
 
         return ProductDetailsAdd.Response.of(productEntity.getProductName());
@@ -171,7 +173,9 @@ public class ProductServiceImpl implements ProductService {
     public ProductDetailsDto removeProductDetails(Long id) {
 
         ProductDetailsEntity productDetailsEntity = productDetailsRepostitory.findById(id)
-                                                                             .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_DETAILS_NOT_FOUNT));
+                                     .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_DETAILS_NOT_FOUNT));
+
+        productRepository.deleteByProductDetailsEntity(productDetailsEntity);
 
         productDetailsRepostitory.delete(productDetailsEntity);
 
@@ -181,7 +185,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     @Override
-    public ProductDetailsDto getProductDetailsList(Long productId) {
+    public ProductDetailsDto getProductDetails(Long productId) {
 
         ProductEntity productEntity = productRepository.findById(productId)
                                                        .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));

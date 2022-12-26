@@ -44,5 +44,5 @@ public interface ProductService {
     ProductDetailsDto removeProductDetails(Long id);
 
     // 회원 상품 상세 정보 조회 API
-    ProductDetailsDto getProductDetailsList(Long id);
+    ProductDetailsDto getProductDetails(Long id);
 }

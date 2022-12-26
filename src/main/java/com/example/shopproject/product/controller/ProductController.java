@@ -76,11 +76,11 @@ public class ProductController {
      */
 
     // 회원 상품 상세정보 조회 API
-    @GetMapping("/detail/{id}/list")
-    public ResponseEntity<?> getProductDetailsList(@PathVariable Long id){
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<?> getProductDetails(@PathVariable Long id){
 
         return new ResponseEntity<>(
-                productService.getProductDetailsList(id), HttpStatus.OK
+                productService.getProductDetails(id), HttpStatus.OK
         );
     }
 

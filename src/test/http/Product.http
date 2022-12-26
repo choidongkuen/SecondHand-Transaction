@@ -7,23 +7,23 @@ Content-Type: application/json
 
 {
   "email":"danaver12@daum.net",
-  "categoryId" : 7,
-  "productName" : "스프링 기초편3",
+  "categoryId" : 2,
+  "productName" : "맥북 프로",
   "productStatus": "USED",
-  "price" : 12000,
-  "salePrice" : 10000,
+  "price" : 1200000,
+  "salePrice" : 1000000,
   "stock": 1
 }
 
 ### 회원 상품 삭제(성공)
-DELETE http://localhost:8080/product/remove/4
+DELETE http://localhost:8080/product/remove/15
 
 #### 회원 상품 수정(성공)
 PUT http://localhost:8080/product/update
 Content-Type: application/json
 
 {
-  "productId" : 1,
+  "productId" : 14,
   "categoryId" : 6,
   "productName" : "짜장면",
   "price" : 10000,
@@ -38,8 +38,14 @@ POST http://localhost:8080/product/detail/add
 Content-Type: application/json
 
 {
-  "productId" : 3,
+  "productId" : 17,
   "summary" : "혁신 IT 애플의 자존심!",
   "productDescription":"구매해보세요! 후회 안하십니다.!",
   "maker" : "APPLE"
 }
+
+### 회원 상품 상세 정보 삭제(성공)
+DELETE http://localhost:8080/product/detail/remove/3
+
+### 회원 상품 상세 정보 조회(성공)
+GET http://localhost:8080/product/detail/17

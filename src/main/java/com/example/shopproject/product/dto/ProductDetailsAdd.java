@@ -1,6 +1,5 @@
 package com.example.shopproject.product.dto;
 
-import com.example.shopproject.product.entity.ProductDetailsEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
