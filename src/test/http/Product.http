@@ -1,0 +1,45 @@
+### 회원 카테고리별 상품 리스트(성공)
+GET http://localhost:8080/product/category/7
+
+### 회원 상품 등록(성공)
+POST http://localhost:8080/product/add
+Content-Type: application/json
+
+{
+  "email":"danaver12@daum.net",
+  "categoryId" : 7,
+  "productName" : "스프링 기초편3",
+  "productStatus": "USED",
+  "price" : 12000,
+  "salePrice" : 10000,
+  "stock": 1
+}
+
+### 회원 상품 삭제(성공)
+DELETE http://localhost:8080/product/remove/4
+
+#### 회원 상품 수정(성공)
+PUT http://localhost:8080/product/update
+Content-Type: application/json
+
+{
+  "productId" : 1,
+  "categoryId" : 6,
+  "productName" : "짜장면",
+  "price" : 10000,
+  "salePrice" : 8000,
+  "productSaleStatus" : "RESERVED",
+  "productStatus" : "NEW",
+  "stock" : 10
+}
+
+### 회원 상품 상세 정보 등록(성공)
+POST http://localhost:8080/product/detail/add
+Content-Type: application/json
+
+{
+  "productId" : 3,
+  "summary" : "혁신 IT 애플의 자존심!",
+  "productDescription":"구매해보세요! 후회 안하십니다.!",
+  "maker" : "APPLE"
+}

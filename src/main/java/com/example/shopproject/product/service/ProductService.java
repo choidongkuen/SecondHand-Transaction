@@ -1,14 +1,9 @@
 package com.example.shopproject.product.service;
 
 
-import com.example.shopproject.product.dto.ProductAdminAdd.Response;
-import com.example.shopproject.product.dto.ProductAdminRemove;
-import com.example.shopproject.product.dto.ProductDto;
-import com.example.shopproject.product.entity.ProductEntity;
+import com.example.shopproject.product.dto.*;
 
 import java.util.List;
-
-import static com.example.shopproject.product.dto.ProductAdminAdd.Request;
 
 /**
  * 0. 등록된 상품 리스트 검색 API
@@ -26,16 +21,28 @@ import static com.example.shopproject.product.dto.ProductAdminAdd.Request;
 public interface ProductService {
 
 
-    // 등록된 상품 리스트 검색 API
+    // 관리자 상품 리스트 검색 API
     List<ProductDto> getProductList();
 
-    // 관리자 상품 등록 API
-    Response adminAddProduct(Request request);
+    // 상품 등록 API
+    ProductAdd.Response addProduct(ProductAdd.Request request);
 
+    // 상품 삭제 API
+    ProductDto removeProduct(Long id);
 
-    ProductAdminRemove.Response adminRemoveProduct(ProductAdminRemove.Request request);
+    // 상품 수정 API
+    ProductUpdate.Response updateProduct(ProductUpdate.Request request);
 
-    ProductDto adminUpdateProduct(ProductDto productDto, Long id);
-
+    // 회원 카테고리별 상품 리스트 검색 API
     List<ProductDto> getProductListByCategory(Long id);
+
+
+    // 회원 상품 상세 정보 등록 API
+    ProductDetailsAdd.Response addProductDetails(ProductDetailsAdd.Request request);
+
+    // 회원 상품 상세 정보 삭제 API
+    ProductDetailsDto removeProductDetails(Long id);
+
+    // 회원 상품 상세 정보 조회 API
+    ProductDetailsDto getProductDetailsList(Long id);
 }

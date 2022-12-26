@@ -4,10 +4,15 @@ import com.example.shopproject.category.entity.CategoryEntity;
 import com.example.shopproject.category.exception.CategoryException;
 import com.example.shopproject.category.repository.CategoryRepository;
 import com.example.shopproject.common.type.ErrorCode;
-import com.example.shopproject.product.dto.ProductAdminRemove;
-import com.example.shopproject.product.dto.ProductDto;
+import com.example.shopproject.common.type.UserStatus;
+import com.example.shopproject.member.entity.MemberEntity;
+import com.example.shopproject.member.exception.MemberException;
+import com.example.shopproject.member.repostory.MemberRepository;
+import com.example.shopproject.product.dto.*;
+import com.example.shopproject.product.entity.ProductDetailsEntity;
 import com.example.shopproject.product.entity.ProductEntity;
 import com.example.shopproject.product.exception.ProductException;
+import com.example.shopproject.product.repository.ProductDetailsRepostitory;
 import com.example.shopproject.product.repository.ProductRepository;
 import com.example.shopproject.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +21,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.example.shopproject.common.type.ProductSaleStatus.ON_SALE;
-import static com.example.shopproject.product.dto.ProductAdminAdd.Request;
-import static com.example.shopproject.product.dto.ProductAdminAdd.Response;
+import static com.example.shopproject.product.dto.ProductDto.fromEntity;
 
 
 /**
@@ -48,6 +50,9 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
 
+    private final MemberRepository memberRepository;
+
+    private final ProductDetailsRepostitory productDetailsRepostitory;
 
     @Override
     public List<ProductDto> getProductList() {
@@ -57,71 +62,12 @@ public class ProductServiceImpl implements ProductService {
                                 .collect(Collectors.toList());
     }
 
-    @Override
-    public Response adminAddProduct(Request request) {
-
-        CategoryEntity categoryEntity =
-                categoryRepository.findById(request.getCategoryId())
-                        .orElseThrow(() -> new CategoryException(ErrorCode.CATEGORY_NOT_FOUND));
-
-        ProductEntity productEntity = ProductEntity.builder()
-                                       .productName(request.getProductName())
-                                       .price(request.getPrice())
-                                       .salePrice(request.getSalePrice())
-                                       .categoryEntity(categoryEntity)
-                                       .stock(request.getStock())
-                                       .productStatus(request.getProductStatus())
-                                       .productSaleStatus(ON_SALE)
-                                       .build();
-
-        productRepository.save(productEntity);
-
-        return Response.fromEntity(
-                productRepository.save(productEntity)
-        );
-    }
-
-    @Override
-    public ProductAdminRemove.Response adminRemoveProduct(ProductAdminRemove.Request request) {
-
-        ProductEntity productEntity = productRepository.findById(request.getId())
-                           .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));
-
-        productRepository.delete(productEntity);
-
-        return ProductAdminRemove.Response.fromEntity(productEntity);
-
-
-    }
-
-    @Override
-    public ProductDto adminUpdateProduct(ProductDto productDto, Long id) {
-
-        ProductEntity productEntity =
-                productRepository.findById(id)
-                      .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));
-
-        CategoryEntity categoryEntity =
-                categoryRepository.findById(productDto.getCategoryId())
-                      .orElseThrow(() -> new CategoryException(ErrorCode.CATEGORY_NOT_FOUND));
-
-        productEntity.setProductName(productDto.getProductName());
-        productEntity.setProductSaleStatus(productDto.getProductSaleStatus());
-        productEntity.setProductStatus(productDto.getProductStatus());
-        productEntity.setCategoryEntity(categoryEntity);
-        productEntity.setPrice(productDto.getPrice());
-        productEntity.setSalePrice(productDto.getSalePrice());
-        productEntity.setStock(productDto.getStock());
-
-        return ProductDto.fromEntity(productRepository.save(productEntity));
-
-    }
 
     @Transactional
     @Override
     public List<ProductDto> getProductListByCategory(Long id) {
 
-        if(categoryRepository.countById(id) == 0){
+        if (categoryRepository.countById(id) == 0) {
             throw new CategoryException(ErrorCode.CATEGORY_NOT_FOUND);
         }
 
@@ -129,5 +75,121 @@ public class ProductServiceImpl implements ProductService {
                                 .filter(p -> p.getCategoryEntity().getId().equals(id))
                                 .map(ProductDto::fromEntity)
                                 .collect(Collectors.toList());
+    }
+
+
+    @Transactional
+    @Override
+    public ProductAdd.Response addProduct(ProductAdd.Request request) {
+
+        MemberEntity memberEntity = memberRepository.findByEmail(request.getEmail())
+                                                    .orElseThrow(() -> new MemberException(ErrorCode.USER_NOT_FOUND));
+
+        // 정지된 사용자인 경우
+        if (memberEntity.getUserStatus().equals(UserStatus.STOP))
+            throw new MemberException(ErrorCode.MEMBER_STATUS_IS_STOP);
+
+        CategoryEntity categoryEntity = categoryRepository.findById(request.getCategoryId())
+                                                          .orElseThrow(() -> new CategoryException(ErrorCode.CATEGORY_NOT_FOUND));
+        return ProductAdd.Response.fromEntity(
+                productRepository.save(ProductEntity.builder()
+                        .productName(request.getProductName())
+                        .memberEntity(memberEntity)
+                        .categoryEntity(categoryEntity)
+                        .productSaleStatus(ON_SALE)
+                        .productStatus(request.getProductStatus())
+                        .price(request.getPrice())
+                        .salePrice(request.getSalePrice())
+                        .stock(request.getStock())
+                        .build()
+                )
+        );
+    }
+
+    @Transactional
+    @Override
+    public ProductDto removeProduct(Long id) {
+
+        ProductEntity productEntity = productRepository.findById(id)
+                                                       .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        productRepository.delete(productEntity);
+
+        return fromEntity(productEntity);
+    }
+
+    @Transactional
+    @Override
+    public ProductUpdate.Response updateProduct(ProductUpdate.Request request) {
+
+
+        // 변경하고자 하는 상품
+        ProductEntity productEntity = productRepository.findById(request.getProductId())
+                                                       .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        // 변경하고자 하는 카테고리
+        CategoryEntity categoryEntity = categoryRepository.findById(request.getCategoryId())
+                                                          .orElseThrow(() -> new CategoryException(ErrorCode.CATEGORY_NOT_FOUND));
+
+        productEntity.setCategoryEntity(categoryEntity);
+        productEntity.setProductName(request.getProductName());
+        productEntity.setSalePrice(request.getSalePrice());
+        productEntity.setProductSaleStatus(request.getProductSaleStatus());
+        productEntity.setProductStatus(request.getProductStatus());
+        productEntity.setStock(request.getStock());
+
+        return ProductUpdate.Response.fromEntity(
+                productRepository.save(productEntity));
+    }
+
+
+    @Transactional
+    @Override
+    public ProductDetailsAdd.Response addProductDetails(ProductDetailsAdd.Request request) {
+
+        ProductEntity productEntity = productRepository.findById(request.getProductId())
+                                                       .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        ProductDetailsEntity productDetailsEntity = ProductDetailsEntity.builder()
+                                            .summary(request.getSummary())
+                                            .productEntity(productEntity)
+                                            .productDescription(request.getProductDescription())
+                                            .maker(request.getMaker())
+                                            .build();
+
+
+        productDetailsRepostitory.save(productDetailsEntity);
+
+        productEntity.setProductDetailsEntity( productDetailsRepostitory.save(productDetailsEntity));
+        productRepository.save(productEntity);
+
+        return ProductDetailsAdd.Response.of(productEntity.getProductName());
+    }
+
+    @Transactional
+    @Override
+    public ProductDetailsDto removeProductDetails(Long id) {
+
+        ProductDetailsEntity productDetailsEntity = productDetailsRepostitory.findById(id)
+                                                                             .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_DETAILS_NOT_FOUNT));
+
+        productDetailsRepostitory.delete(productDetailsEntity);
+
+        return ProductDetailsDto.fromEntity(productDetailsEntity);
+
+    }
+
+    @Transactional
+    @Override
+    public ProductDetailsDto getProductDetailsList(Long productId) {
+
+        ProductEntity productEntity = productRepository.findById(productId)
+                                                       .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        if (productEntity.getProductDetailsEntity() == null) {
+            throw new ProductException(ErrorCode.PRODUCT_DETAILS_NOT_FOUNT);
+        }
+
+        return ProductDetailsDto.fromEntity(productEntity.getProductDetailsEntity());
     }
 }

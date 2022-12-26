@@ -1,7 +1,6 @@
 package com.example.shopproject.product.dto;
 
 
-import com.example.shopproject.category.entity.CategoryEntity;
 import com.example.shopproject.common.type.ProductSaleStatus;
 import com.example.shopproject.common.type.ProductStatus;
 import com.example.shopproject.product.entity.ProductEntity;
@@ -35,13 +34,13 @@ public class ProductDto {
     public static ProductDto fromEntity(ProductEntity entity) {
 
         return ProductDto.builder()
-                 .productName(entity.getProductName())
-                 .productSaleStatus(entity.getProductSaleStatus())
-                 .productStatus(entity.getProductStatus())
-                 .categoryName(entity.getCategoryEntity().getCategoryName())
-                 .salePrice(entity.getSalePrice())
-                 .stock(entity.getStock())
-                 .build();
+                         .productName(entity.getProductName())
+                         .productSaleStatus(entity.getProductSaleStatus())
+                         .productStatus(entity.getProductStatus())
+                         .categoryName(entity.getCategoryEntity().getCategoryName())
+                         .salePrice(entity.getSalePrice())
+                         .stock(entity.getStock())
+                         .build();
     }
 
 }

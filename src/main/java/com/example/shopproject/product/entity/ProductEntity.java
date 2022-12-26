@@ -38,7 +38,7 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="product")
+@Table(name = "product")
 @Entity
 
 public class ProductEntity extends BasicTimeEntity {
@@ -49,14 +49,13 @@ public class ProductEntity extends BasicTimeEntity {
     private Long id;
 
 
-
     @Column(nullable = false)
     private String productName;
 
 
     // 등록 관점 N : 1 (양방향)
     @ManyToOne
-    @JoinColumn(name="member")
+    @JoinColumn(name = "member")
     private MemberEntity memberEntity;
 
     // 1 : 1 (양방향)

@@ -37,7 +37,8 @@ public enum ErrorCode {
 
     PRODUCT_NOT_FOUND("해당 상품 정보가 존재하지 않습니다."),
 
-    PRODUCT_ALREADY_SOLDOUT("해당 상품은 이미 판매 완료되었습니다.");
+    PRODUCT_ALREADY_SOLDOUT("해당 상품은 이미 판매 완료되었습니다."),
+    PRODUCT_DETAILS_NOT_FOUNT("해당 상품 상세 정보가 존재하지 않습니다.");
 
     private final String message;
 

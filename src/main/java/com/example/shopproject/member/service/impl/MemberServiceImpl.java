@@ -131,7 +131,7 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         MemberEntity memberEntity = memberRepository.findByEmail(email)
-                                                    .orElseThrow(() -> new MemberException(ErrorCode.USER_NOT_FOUND));
+                                    .orElseThrow(() -> new MemberException(ErrorCode.USER_NOT_FOUND));
 
         // 이메일 인증 아직 안된 경우
         if (!memberEntity.isEmailAuthYn()) {

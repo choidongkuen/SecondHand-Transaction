@@ -1,15 +1,14 @@
 package com.example.shopproject.admin;
 
 
-
 import com.example.shopproject.category.dto.CategoryUpdate;
 import com.example.shopproject.category.service.CategoryService;
 import com.example.shopproject.member.dto.MemberPassword;
 import com.example.shopproject.member.dto.MemberSetRole;
 import com.example.shopproject.member.dto.MemberStatus;
 import com.example.shopproject.member.service.MemberService;
-import com.example.shopproject.product.dto.ProductAdminRemove;
-import com.example.shopproject.product.dto.ProductDto;
+import com.example.shopproject.product.dto.ProductAdd;
+import com.example.shopproject.product.dto.ProductUpdate;
 import com.example.shopproject.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
-
-import static com.example.shopproject.product.dto.ProductAdminAdd.Request;
 
 
 @RestController
@@ -84,8 +81,6 @@ public class AdminController {
         return new ResponseEntity<>(
                 memberService.setUserStatus(request), HttpStatus.OK
         );
-
-
     }
 
     // 회원 비밀번호 변경 API
@@ -109,6 +104,15 @@ public class AdminController {
 
         return new ResponseEntity<>(
                 categoryService.getCategoryList(), HttpStatus.OK
+        );
+    }
+
+    // 관리자 카테고리 별 상품 리스트 검색 API
+    @GetMapping("/category/{id}/products")
+    public ResponseEntity<?> getProductListByCategory(@PathVariable Long id){
+
+        return new ResponseEntity<>(
+                productService.getProductListByCategory(id), HttpStatus.OK
         );
     }
 
@@ -157,38 +161,33 @@ public class AdminController {
         return new ResponseEntity<>(
                 productService.getProductList(), HttpStatus.OK
         );
-
-
     }
 
     // 관리자 상품 등록 API
     @PostMapping("/product/add")
-    public ResponseEntity<?> addProduct(@RequestBody @Valid Request request) {
+    public ResponseEntity<?> addProduct(@RequestBody @Valid ProductAdd.Request request) {
 
         return new ResponseEntity<>(
-                productService.adminAddProduct(request), HttpStatus.OK
+                productService.addProduct(request), HttpStatus.OK
         );
     }
 
     // 관리자 상품 삭제 API
-    @DeleteMapping("/product/remove")
-    public ResponseEntity<?> removeProduct(
-            @RequestBody @Valid ProductAdminRemove.Request request
-    ) {
+    @DeleteMapping("/product/remove/{id}")
+    public ResponseEntity<?> removeProduct(@PathVariable Long id) {
 
         return new ResponseEntity<>(
-                productService.adminRemoveProduct(request), HttpStatus.OK
+                productService.removeProduct(id), HttpStatus.OK
         );
     }
 
     // 관리자 상품 수정 API
-    @PutMapping("/product/update/{id}")
+    @PutMapping("/product/update")
     public ResponseEntity<?> updateProduct(
-            @RequestBody @Valid ProductDto productDto, @PathVariable Long id
-    ){
-
+            @RequestBody @Valid ProductUpdate.Request request
+    ) {
         return new ResponseEntity<>(
-                productService.adminUpdateProduct(productDto,id), HttpStatus.OK
+                productService.updateProduct(request), HttpStatus.OK
 
         );
     }
