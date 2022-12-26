@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
-
 public class MainController {
 
 

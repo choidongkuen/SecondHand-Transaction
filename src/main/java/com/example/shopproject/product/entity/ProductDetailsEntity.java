@@ -23,7 +23,7 @@ import javax.persistence.*;
 @Table
 @Entity
 
-public class ProductDetails extends BasicTimeEntity {
+public class ProductDetailsEntity extends BasicTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,8 @@ public class ProductDetails extends BasicTimeEntity {
     private Long id;
 
 
-    @OneToOne(mappedBy = "productDetails")
+    // 양방향
+    @OneToOne(mappedBy = "productDetailsEntity")
     private ProductEntity productEntity;
 
     private String summary;

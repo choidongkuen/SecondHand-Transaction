@@ -1,6 +1,7 @@
 package com.example.shopproject.product.entity;
 
 
+import com.example.shopproject.category.entity.CategoryEntity;
 import com.example.shopproject.common.type.ProductSaleStatus;
 import com.example.shopproject.common.type.ProductStatus;
 import com.example.shopproject.member.entity.BasicTimeEntity;
@@ -9,7 +10,6 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 /**
  * 1. 상품 아이디
@@ -49,19 +49,25 @@ public class ProductEntity extends BasicTimeEntity {
     private Long id;
 
 
-    private String productId;
-
 
     @Column(nullable = false)
     private String productName;
 
+
+    // 등록 관점 N : 1 (양방향)
     @ManyToOne
     @JoinColumn(name="member")
     private MemberEntity memberEntity;
 
+    // 1 : 1 (양방향)
     @OneToOne
     @JoinColumn(name = "productDetails")
-    private ProductDetails productDetails;
+    private ProductDetailsEntity productDetailsEntity;
+
+    // N : 1 (양방향)
+    @ManyToOne
+    @JoinColumn(name = "category")
+    private CategoryEntity categoryEntity;
 
 
     @Enumerated(EnumType.STRING)

@@ -1,5 +1,6 @@
 package com.example.shopproject.product.dto;
 
+import com.example.shopproject.category.entity.CategoryEntity;
 import com.example.shopproject.common.type.ProductSaleStatus;
 import com.example.shopproject.common.type.ProductStatus;
 import com.example.shopproject.product.entity.ProductEntity;
@@ -36,6 +37,9 @@ public class ProductAdminAdd {
         @NotNull(message = "상품 판매 가격은 필수 입력값 입니다.")
         private Long salePrice;
 
+        @NotNull(message = "상품 카테고리명은 필수 입력값 입니다.")
+        private Long categoryId;
+
         @Valid
         private ProductStatus productStatus;
 
@@ -51,13 +55,16 @@ public class ProductAdminAdd {
 
         private String productName;
         private ProductSaleStatus productSaleStatus;
+        private String categoryName;
         private String message;
+
 
         public static Response fromEntity(ProductEntity entity) {
 
             return Response.builder()
                     .productName(entity.getProductName())
                     .productSaleStatus(entity.getProductSaleStatus())
+                    .categoryName(entity.getCategoryEntity().getCategoryName())
                     .message("상품이 정상적으로 등록되었습니다.")
                     .build();
         }

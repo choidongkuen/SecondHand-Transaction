@@ -4,6 +4,7 @@ package com.example.shopproject.product.service;
 import com.example.shopproject.product.dto.ProductAdminAdd.Response;
 import com.example.shopproject.product.dto.ProductAdminRemove;
 import com.example.shopproject.product.dto.ProductDto;
+import com.example.shopproject.product.entity.ProductEntity;
 
 import java.util.List;
 
@@ -35,4 +36,6 @@ public interface ProductService {
     ProductAdminRemove.Response adminRemoveProduct(ProductAdminRemove.Request request);
 
     ProductDto adminUpdateProduct(ProductDto productDto, Long id);
+
+    List<ProductDto> getProductListByCategory(Long id);
 }

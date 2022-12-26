@@ -1,5 +1,8 @@
 package com.example.shopproject.product.service.impl;
 
+import com.example.shopproject.category.entity.CategoryEntity;
+import com.example.shopproject.category.exception.CategoryException;
+import com.example.shopproject.category.repository.CategoryRepository;
 import com.example.shopproject.common.type.ErrorCode;
 import com.example.shopproject.product.dto.ProductAdminRemove;
 import com.example.shopproject.product.dto.ProductDto;
@@ -9,10 +12,13 @@ import com.example.shopproject.product.repository.ProductRepository;
 import com.example.shopproject.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.example.shopproject.common.type.ProductSaleStatus.ON_SALE;
@@ -40,10 +46,10 @@ import static com.example.shopproject.product.dto.ProductAdminAdd.Response;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
 
     @Override
-    @Transactional
     public List<ProductDto> getProductList() {
 
         return productRepository.findAll().stream()
@@ -52,17 +58,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Transactional
     public Response adminAddProduct(Request request) {
 
+        CategoryEntity categoryEntity =
+                categoryRepository.findById(request.getCategoryId())
+                        .orElseThrow(() -> new CategoryException(ErrorCode.CATEGORY_NOT_FOUND));
+
         ProductEntity productEntity = ProductEntity.builder()
-                                                   .productName(request.getProductName())
-                                                   .price(request.getPrice())
-                                                   .salePrice(request.getSalePrice())
-                                                   .stock(request.getStock())
-                                                   .productStatus(request.getProductStatus())
-                                                   .productSaleStatus(ON_SALE)
-                                                   .build();
+                                       .productName(request.getProductName())
+                                       .price(request.getPrice())
+                                       .salePrice(request.getSalePrice())
+                                       .categoryEntity(categoryEntity)
+                                       .stock(request.getStock())
+                                       .productStatus(request.getProductStatus())
+                                       .productSaleStatus(ON_SALE)
+                                       .build();
 
         productRepository.save(productEntity);
 
@@ -87,17 +97,37 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto adminUpdateProduct(ProductDto productDto, Long id) {
 
-        ProductEntity productEntity = productRepository.findById(id)
+        ProductEntity productEntity =
+                productRepository.findById(id)
                       .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        CategoryEntity categoryEntity =
+                categoryRepository.findById(productDto.getCategoryId())
+                      .orElseThrow(() -> new CategoryException(ErrorCode.CATEGORY_NOT_FOUND));
 
         productEntity.setProductName(productDto.getProductName());
         productEntity.setProductSaleStatus(productDto.getProductSaleStatus());
         productEntity.setProductStatus(productDto.getProductStatus());
+        productEntity.setCategoryEntity(categoryEntity);
         productEntity.setPrice(productDto.getPrice());
         productEntity.setSalePrice(productDto.getSalePrice());
         productEntity.setStock(productDto.getStock());
 
         return ProductDto.fromEntity(productRepository.save(productEntity));
 
+    }
+
+    @Transactional
+    @Override
+    public List<ProductDto> getProductListByCategory(Long id) {
+
+        if(categoryRepository.countById(id) == 0){
+            throw new CategoryException(ErrorCode.CATEGORY_NOT_FOUND);
+        }
+
+        return productRepository.findAll(Sort.by(Sort.Order.desc("createdAt"))).stream()
+                                .filter(p -> p.getCategoryEntity().getId().equals(id))
+                                .map(ProductDto::fromEntity)
+                                .collect(Collectors.toList());
     }
 }

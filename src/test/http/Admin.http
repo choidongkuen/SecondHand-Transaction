@@ -37,7 +37,7 @@ Content-Type: application/json
 
 
 
-#### 카테고리 부분
+### 카테고리 부분
 
 ### 관리자 카테고리 검색(성공)
 GET http://localhost:8080/admin/category/list
@@ -56,10 +56,10 @@ PUT http://localhost:8080/admin/category/update
 Content-Type: application/json
 
 {
-  "id" : 2,
-  "categoryName" : "전자제품",
-  "sortValue" : 10,
-  "usingYn": false
+  "id" : 3,
+  "categoryName" : "문구",
+  "sortValue" : 5,
+  "usingYn": true
 }
 
 
@@ -77,9 +77,10 @@ POST http://localhost:8080/admin/product/add
 Content-Type: application/json
 
 {
-  "productName" : "아이폰12",
-  "price" : 1200000,
-  "salePrice" : 1000000,
+  "productName" : "자바 프로그래밍2",
+  "price" : 8000,
+  "salePrice" : 8000,
+  "categoryId" : 7,
   "productStatus": "USED",
   "stock" : 1
 }
@@ -98,7 +99,7 @@ PUT http://localhost:8080/admin/product/update/1
 Content-Type: application/json
 
 {
-"productName" : "아이폰12",
+"productName" : "아이폰11S",
 "productSaleStatus" : "ON_SALE",
 "productStatus" : "NEW",
 "price" : 10000,

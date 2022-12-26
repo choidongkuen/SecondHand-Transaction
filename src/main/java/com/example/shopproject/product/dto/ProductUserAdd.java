@@ -1,6 +1,7 @@
 package com.example.shopproject.product.dto;
 
 import com.example.shopproject.common.type.ProductStatus;
+import com.example.shopproject.product.entity.ProductEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,8 @@ public class ProductUserAdd {
 
         private ProductStatus productStatus;
 
+        private Long categoryId;
+
         private Long stock;
     }
 
@@ -39,6 +42,16 @@ public class ProductUserAdd {
         private String email;
 
         private String productName;
+
+        private String categoryName;
+
+        public static Response fromEntity(ProductEntity entity){
+            return Response.builder()
+                    .email(entity.getMemberEntity().getEmail())
+                    .productName(entity.getProductName())
+                    .categoryName(entity.getCategoryEntity().getCategoryName())
+                    .build();
+        }
 
 
     }

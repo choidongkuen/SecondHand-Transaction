@@ -1,10 +1,13 @@
 package com.example.shopproject.category.entity;
 
 
+import com.example.shopproject.product.entity.ProductEntity;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -31,6 +34,11 @@ public class CategoryEntity {
 
     @Column(nullable = false)
     private String categoryName;
+
+    // 양방향
+    @OneToMany(mappedBy = "categoryEntity")
+    private List<ProductEntity> products = new ArrayList<>();
+
 
     private int sortValue;
 

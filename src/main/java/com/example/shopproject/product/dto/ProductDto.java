@@ -1,6 +1,7 @@
 package com.example.shopproject.product.dto;
 
 
+import com.example.shopproject.category.entity.CategoryEntity;
 import com.example.shopproject.common.type.ProductSaleStatus;
 import com.example.shopproject.common.type.ProductStatus;
 import com.example.shopproject.product.entity.ProductEntity;
@@ -21,6 +22,10 @@ public class ProductDto {
 
     private ProductStatus productStatus;
 
+    private Long categoryId;
+
+    private String categoryName;
+
     private Long price;
 
     private Long salePrice;
@@ -33,6 +38,7 @@ public class ProductDto {
                  .productName(entity.getProductName())
                  .productSaleStatus(entity.getProductSaleStatus())
                  .productStatus(entity.getProductStatus())
+                 .categoryName(entity.getCategoryEntity().getCategoryName())
                  .salePrice(entity.getSalePrice())
                  .stock(entity.getStock())
                  .build();
