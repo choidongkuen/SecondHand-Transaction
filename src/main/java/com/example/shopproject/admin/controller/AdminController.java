@@ -3,6 +3,7 @@ package com.example.shopproject.admin.controller;
 
 import com.example.shopproject.category.dto.CategoryUpdate;
 import com.example.shopproject.category.service.CategoryService;
+import com.example.shopproject.common.constants.CacheKey;
 import com.example.shopproject.member.dto.MemberPassword;
 import com.example.shopproject.member.dto.MemberSetRole;
 import com.example.shopproject.member.dto.MemberStatus;
@@ -12,6 +13,7 @@ import com.example.shopproject.product.dto.ProductUpdate;
 import com.example.shopproject.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -40,6 +42,7 @@ public class AdminController {
      */
 
     // 관리자 회원 리스트 검색 API
+    @Cacheable(key = "#registeredMember", value = CacheKey.CACHE_KEY)
     @GetMapping("/member/list")
     public ResponseEntity<?> getMemberList(
             @PageableDefault(size = 10, sort = "createdAt",
