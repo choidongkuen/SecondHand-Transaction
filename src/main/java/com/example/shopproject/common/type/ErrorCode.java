@@ -7,6 +7,7 @@ import lombok.*;
 @Getter
 public enum ErrorCode {
 
+    // 회원 관련 에러
     EMAIL_ALREADY_EXIST("해당 이메일 회원이 이미 존재 합니다."),
 
     NICKNAME_ALREADY_EXISTS("해당 닉에임이 이미 존재 합니다."),
@@ -26,19 +27,25 @@ public enum ErrorCode {
 
     MEMBER_STATUS_IS_STOP("해당 회원은 이용이 정지되었습니다."),
 
-    ////////////////////////////////////////////////////////////////////
 
+    // 카테고리 관련 에러
     CATEGORY_NOT_FOUND("해당 카테고리가 존재하지 않습니다."),
 
-
-
-    ////////////////////////////////////////////////////////////////////
-
+    // 상품 관련 에러
 
     PRODUCT_NOT_FOUND("해당 상품 정보가 존재하지 않습니다."),
 
     PRODUCT_ALREADY_SOLDOUT("해당 상품은 이미 판매 완료되었습니다."),
-    PRODUCT_DETAILS_NOT_FOUNT("해당 상품 상세 정보가 존재하지 않습니다.");
+    PRODUCT_DETAILS_NOT_FOUNT("해당 상품 상세 정보가 존재하지 않습니다."),
+
+
+    // 주문 관련 에러
+
+    ORDER_NOT_FOUND("해당 주문 정보가 존재하지 않습니다."),
+    STOCK_UNSATISFIED("재고가 부족합니다.");
+
+
+
 
     private final String message;
 

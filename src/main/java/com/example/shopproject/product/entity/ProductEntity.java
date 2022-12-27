@@ -54,17 +54,17 @@ public class ProductEntity extends BasicTimeEntity {
 
 
     // 등록 관점 N : 1 (양방향)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member")
     private MemberEntity memberEntity;
 
     // 1 : 1 (양방향)
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productDetails")
     private ProductDetailsEntity productDetailsEntity;
 
     // N : 1 (양방향)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category")
     private CategoryEntity categoryEntity;
 

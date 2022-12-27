@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ProductExceptionHandler {
 
     @ExceptionHandler(ProductException.class)
-    protected ResponseEntity<?> handleMemberException(ProductException e) {
+    protected ResponseEntity<?> handleProductException(ProductException e) {
 
         log.info(e.getMessage());
 
-        return new ResponseEntity<>(new ResponseResult(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(
+                new ResponseResult(false, e.getMessage()), HttpStatus.BAD_REQUEST
+        );
     }
 }

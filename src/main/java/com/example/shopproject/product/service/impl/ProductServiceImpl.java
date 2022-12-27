@@ -22,25 +22,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.example.shopproject.common.type.ProductSaleStatus.ON_SALE;
 import static com.example.shopproject.product.dto.ProductDto.fromEntity;
 
 
-/**
- * 0. 등록된 상품 리스트 검색 API
- * 1. 관리자 상품 등록 API
- * 2. 판매자 상품 등록 API
- * 3. 관리자 상품 세일 설정 API
- * 4. 관리자 상품 상세 설명 등록 API
- * 5. 판매자 상품 상세 설명 등록 API
- * 6. 관리자 상품 상태 변경 API
- * 7. 판매자 상품 상태 변경 API
- * 8. 관리자 상품 삭제 API
- * 9. 판매자 상품 삭제 API
- */
 
 @Slf4j
 @Service
@@ -55,6 +42,8 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductDetailsRepostitory productDetailsRepostitory;
 
+
+    // 상품 리스트 검색 API
     @Override
     public List<ProductDto> getProductList() {
 
@@ -64,6 +53,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+    // 회원 카테고리별 상품 리스트 검색 API
     @Transactional
     @Override
     public List<ProductDto> getProductListByCategory(Long id) {
@@ -79,6 +69,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+    // 상품 등록 API
     @Transactional
     @Override
     public ProductAdd.Response addProduct(ProductAdd.Request request) {
@@ -107,6 +98,7 @@ public class ProductServiceImpl implements ProductService {
         );
     }
 
+    // 상품 삭제 API
     @Transactional
     @Override
     public ProductDto removeProduct(Long id) {
@@ -124,6 +116,7 @@ public class ProductServiceImpl implements ProductService {
         return fromEntity(productEntity);
     }
 
+    // 상품 수정 API
     @Transactional
     @Override
     public ProductUpdate.Response updateProduct(ProductUpdate.Request request) {
@@ -149,6 +142,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+    // 회원 상품 상세 정보 등록 API
     @Transactional
     @Override
     public ProductDetailsAdd.Response addProductDetails(ProductDetailsAdd.Request request) {
@@ -168,6 +162,8 @@ public class ProductServiceImpl implements ProductService {
         return ProductDetailsAdd.Response.of(productEntity.getProductName());
     }
 
+    // 회원 상품 상세 정보 삭제 API
+
     @Transactional
     @Override
     public ProductDetailsDto removeProductDetails(Long id) {
@@ -183,6 +179,7 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+    // 회원 상품 상세 정보 조회 API
     @Transactional
     @Override
     public ProductDetailsDto getProductDetails(Long productId) {

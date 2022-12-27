@@ -1,0 +1,6 @@
+### 주문 요청 API (성공)
+POST http://localhost:8080/order/17?userEmail=danaver12@daum.net
+
+
+### 주문 취소 API (성공)
+DELETE http://localhost:8080/order/3

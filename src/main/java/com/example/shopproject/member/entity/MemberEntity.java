@@ -4,6 +4,7 @@ package com.example.shopproject.member.entity;
 import com.example.shopproject.common.type.Role;
 import com.example.shopproject.common.type.UserStatus;
 import com.example.shopproject.member.dto.Address;
+import com.example.shopproject.order.entity.OrderEntity;
 import com.example.shopproject.product.entity.ProductEntity;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -45,8 +46,14 @@ public class MemberEntity extends BasicTimeEntity implements UserDetails{
     @Embedded
     private Address address;
 
+
+    // 등록 상품
     @OneToMany(mappedBy = "memberEntity")
     private List<ProductEntity> products = new ArrayList<>();
+
+    // 주문 상품
+    @OneToMany(mappedBy = "memberEntity")
+    private List<OrderEntity> orders = new ArrayList<>();
 
     @Column(unique = true)
     private String nickName;

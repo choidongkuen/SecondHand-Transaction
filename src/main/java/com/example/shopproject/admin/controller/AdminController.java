@@ -1,4 +1,4 @@
-package com.example.shopproject.admin;
+package com.example.shopproject.admin.controller;
 
 
 import com.example.shopproject.category.dto.CategoryUpdate;
