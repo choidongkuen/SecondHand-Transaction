@@ -1,7 +1,7 @@
-## USED_MARKET_PLATFORM
-
-
 ## USED_MARKET_PLATFORM(중고 거래 플렛폼)
+
+### 프로젝트 기간
+  - 2022/11/21 ~ 2022/12/25
 
 ### 프로젝트 수행 목적
 
@@ -31,6 +31,8 @@ AWS 배포 방식에 대한 이해를 돕기 위해 제작하게 되었습니다
 ### ERD
 
 ![중고거래](https://user-images.githubusercontent.com/96874318/209803782-059ca295-14cc-4f10-a17d-a3fb7e3e6fca.png)
+
+
 
 
 
