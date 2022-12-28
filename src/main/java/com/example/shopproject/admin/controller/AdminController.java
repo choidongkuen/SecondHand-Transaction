@@ -42,7 +42,6 @@ public class AdminController {
      */
 
     // 관리자 회원 리스트 검색 API
-    @Cacheable(key = "#registeredMember", value = CacheKey.CACHE_KEY)
     @GetMapping("/member/list")
     public ResponseEntity<?> getMemberList(
             @PageableDefault(size = 10, sort = "createdAt",

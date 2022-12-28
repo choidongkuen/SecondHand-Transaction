@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.security.Principal;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -18,6 +17,9 @@ import java.security.Principal;
 public class CommentController {
 
     private final CommentService commentService;
+
+
+    // comment 추가
 
     @PostMapping("/comment/add")
     public ResponseEntity<?> addComment(
@@ -30,6 +32,7 @@ public class CommentController {
 
     }
 
+    // comment 수정
     @PutMapping("/comment/update")
     public ResponseEntity<?> updateComment(
             @RequestBody @Valid CommentInput.Update request) {
@@ -38,6 +41,8 @@ public class CommentController {
                 commentService.updateComment(request), HttpStatus.OK
         );
     }
+
+    // comment 삭제
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeComment(@PathVariable Long id) {

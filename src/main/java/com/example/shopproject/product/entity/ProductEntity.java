@@ -2,6 +2,7 @@ package com.example.shopproject.product.entity;
 
 
 import com.example.shopproject.category.entity.CategoryEntity;
+import com.example.shopproject.comment.entity.CommentEntity;
 import com.example.shopproject.common.type.ProductSaleStatus;
 import com.example.shopproject.common.type.ProductStatus;
 import com.example.shopproject.member.entity.BasicTimeEntity;
@@ -10,6 +11,8 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 1. 상품 아이디
@@ -59,7 +62,7 @@ public class ProductEntity extends BasicTimeEntity {
     private MemberEntity memberEntity;
 
     // 1 : 1 (양방향)
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "productDetails")
     private ProductDetailsEntity productDetailsEntity;
 
@@ -68,6 +71,9 @@ public class ProductEntity extends BasicTimeEntity {
     @JoinColumn(name = "category")
     private CategoryEntity categoryEntity;
 
+    // 1 : N (양방향)
+    @OneToMany(mappedBy = "productEntity",cascade = CascadeType.ALL)
+    private List<CommentEntity> comments = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private ProductSaleStatus productSaleStatus;

@@ -5,9 +5,11 @@ import com.example.shopproject.category.entity.CategoryEntity;
 import com.example.shopproject.category.exception.CategoryException;
 import com.example.shopproject.category.repository.CategoryRepository;
 import com.example.shopproject.category.service.CategoryService;
+import com.example.shopproject.common.constants.CacheKey;
 import com.example.shopproject.common.type.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -79,6 +81,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     // 4. 카테고리 목록 API
+
     @Override
     public List<CategoryDto> getCategoryList() {
 

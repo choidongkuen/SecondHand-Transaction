@@ -1,6 +1,8 @@
 package com.example.shopproject.product.service;
 
 
+import com.example.shopproject.comment.dto.CommentDto;
+import com.example.shopproject.comment.entity.CommentEntity;
 import com.example.shopproject.product.dto.*;
 
 import java.util.List;
@@ -45,4 +47,7 @@ public interface ProductService {
 
     // 회원 상품 상세 정보 조회 API
     ProductDetailsDto getProductDetails(Long id);
+
+    // 댓글 조회 API
+    List<CommentDto> getComments(Long id);
 }

@@ -3,6 +3,8 @@ package com.example.shopproject.product.service.impl;
 import com.example.shopproject.category.entity.CategoryEntity;
 import com.example.shopproject.category.exception.CategoryException;
 import com.example.shopproject.category.repository.CategoryRepository;
+import com.example.shopproject.comment.dto.CommentDto;
+import com.example.shopproject.common.constants.CacheKey;
 import com.example.shopproject.common.type.ErrorCode;
 import com.example.shopproject.common.type.UserStatus;
 import com.example.shopproject.member.entity.MemberEntity;
@@ -17,6 +19,7 @@ import com.example.shopproject.product.repository.ProductRepository;
 import com.example.shopproject.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -192,5 +195,20 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return ProductDetailsDto.fromEntity(productEntity.getProductDetailsEntity());
+    }
+
+
+
+    // 상품 comment 조회 API
+    @Override
+    @Cacheable(key = "#id", value = CacheKey.CACHE_KEY)
+    public List<CommentDto> getComments(Long id) {
+
+        ProductEntity productEntity = productRepository.findById(id)
+                       .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        return productEntity.getComments().stream()
+                .map(CommentDto::fromEntity)
+                .collect(Collectors.toList());
     }
 }

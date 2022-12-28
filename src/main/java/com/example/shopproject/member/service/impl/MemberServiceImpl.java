@@ -2,6 +2,7 @@ package com.example.shopproject.member.service.impl;
 
 
 
+import com.example.shopproject.common.constants.CacheKey;
 import com.example.shopproject.common.mail.Mail;
 import com.example.shopproject.common.mail.MailComponents;
 import com.example.shopproject.common.type.ErrorCode;
@@ -18,6 +19,7 @@ import com.example.shopproject.member.repostory.MemberRepository;
 import com.example.shopproject.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -246,7 +248,6 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
      */
 
     @Override
-
     public List<MemberDto> getMemberList(Pageable pageable) {
 
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
@@ -275,6 +276,7 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
     }
 
     @Override
+    @Cacheable(key = "#email", value = CacheKey.CACHE_KEY)
     public MemberDto detail(String email) {
 
         MemberEntity memberEntity

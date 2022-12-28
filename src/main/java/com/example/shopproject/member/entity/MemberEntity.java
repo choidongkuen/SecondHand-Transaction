@@ -44,11 +44,11 @@ public class MemberEntity extends BasicTimeEntity implements UserDetails{
 
 
     // 등록 상품
-    @OneToMany(mappedBy = "memberEntity")
+    @OneToMany(mappedBy = "memberEntity",cascade = CascadeType.ALL)
     private List<ProductEntity> products = new ArrayList<>();
 
     // 주문 상품
-    @OneToMany(mappedBy = "memberEntity")
+    @OneToMany(mappedBy = "memberEntity",cascade = CascadeType.ALL)
     private List<OrderEntity> orders = new ArrayList<>();
 
     @Column(unique = true)
