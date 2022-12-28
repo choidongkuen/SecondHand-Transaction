@@ -42,7 +42,11 @@ public enum ErrorCode {
     // 주문 관련 에러
 
     ORDER_NOT_FOUND("해당 주문 정보가 존재하지 않습니다."),
-    STOCK_UNSATISFIED("재고가 부족합니다.");
+    STOCK_UNSATISFIED("재고가 부족합니다."),
+
+    // 댓글 관련 에러
+
+    COMMENT_NOT_FOUND("해당 댓글 정보가 존재하지 않습니다.");
 
 
 

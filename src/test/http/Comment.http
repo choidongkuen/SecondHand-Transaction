@@ -1,0 +1,24 @@
+### 댓글 등록 API(성공)
+POST http://localhost:8080/comment/add
+Content-Type: application/json
+
+{
+  "email": "danaver12@daum.net",
+  "productId" : 18,
+  "text" : "너무 좋아요!"
+
+}
+
+###  댓글 수정 API(성공)
+PUT http://localhost:8080/comment/update
+Content-Type: application/json
+
+{
+  "email" : "danaver12@daum.net",
+  "commentId" : 1,
+  "text" : "안녕 오랜 나의 사람아"
+}
+
+
+### 댓글 삭제 API (성공)
+DELETE http://localhost:8080/2
