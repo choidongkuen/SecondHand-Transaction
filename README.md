@@ -6,3 +6,6 @@
 
 
 ### ERD
+
+## erd
+![중고거래](https://user-images.githubusercontent.com/96874318/209803782-059ca295-14cc-4f10-a17d-a3fb7e3e6fca.png)
