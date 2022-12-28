@@ -3,7 +3,6 @@ package com.example.shopproject.member.entity;
 
 import com.example.shopproject.common.type.Role;
 import com.example.shopproject.common.type.UserStatus;
-import com.example.shopproject.member.dto.Address;
 import com.example.shopproject.order.entity.OrderEntity;
 import com.example.shopproject.product.entity.ProductEntity;
 import lombok.*;
@@ -42,9 +41,6 @@ public class MemberEntity extends BasicTimeEntity implements UserDetails{
     private String phone;
 
     private String password;
-
-    @Embedded
-    private Address address;
 
 
     // 등록 상품
